@@ -1,0 +1,60 @@
+version: '3.2'
+
+services:
+  db01:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=mdm
+      - MYSQL_USER=mdmuser
+      - MYSQL_PASSWORD=123456
+    volumes:
+      - /Users/chenhuaquan/Desktop/Yotta/dock-compose/mdmservices/disk/mysql01:/var/lib/mysql
+    ports:
+      - "13306:3306"
+    networks:
+      - sctest
+
+
+  db02:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=mdm
+      - MYSQL_USER=mdmuser
+      - MYSQL_PASSWORD=123456
+    volumes:
+      - /Users/chenhuaquan/Desktop/Yotta/dock-compose/mdmservices/disk/mysql02:/var/lib/mysql
+    ports:
+      - "13307:3306"
+    networks:
+      - sctest
+
+  mdmsvr01:
+    image: garden/mdmservice:0.0.1
+    container_name: mdmservice01
+    environment:
+      - "ES_JAVA_OPTS=-Xms64m -Xmx512m"
+    ports:
+      - "18080:18080"
+    networks:
+      - sctest
+
+  mdmsvr02:
+    image: garden/mdmservice_02:0.0.1
+    container_name: mdmservice02
+    environment:
+      - "ES_JAVA_OPTS=-Xms64m -Xmx512m"
+    ports:
+      - "18081:18081"
+    networks:
+      - sctest
+
+networks:
+    mdm:
+      driver: bridge
+
+
+
+   
+
